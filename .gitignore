@@ -49,7 +49,6 @@ po/*~
 rsconnect/
 
 # Custom
-*.csv
 *.dta
 *.Rdata
 *.tsv
