@@ -3,12 +3,13 @@ fda_drug_data <- read_excel("~/Downloads/fda_drug_data.xlsx")
 
 
 library(dplyr)
-fda_drug_data %>%
-  count(PHARM_CLASSES)
 
 fda_drug_data %>%
   count(PRODUCTTYPENAME)
 
+fda_drug_data %>%
+  filter(PRODUCTTYPENAME == "PLASMA DERIVATIVE") %>%
+  count(PHARM_CLASSES)
 
 library(lubridate)
 fda_drug_data <- fda_drug_data %>%
