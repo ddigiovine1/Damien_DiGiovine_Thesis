@@ -1,0 +1,24 @@
+name,title,type,format,description
+ndc_description,"NDC Description",string,default,"Identifies the drug name, strength, and dosage form of the drug product."
+ndc,NDC,string,default,"The National Drug Code (NDC) is a numerical code maintained by the FDA that includes the labeler code, product code, and package code. The NDC is an 11-digit code."
+nadac_per_unit,"NADAC Per Unit",number,default,"The National Average Drug Acquisition Cost per unit."
+effective_date,"Effective Date",date,%m/%d/%Y,"The effective date of the NADAC Per Unit cost."
+pricing_unit,"Pricing Unit",string,default,,"Indicates the pricing unit for the associated NDC ('ML', 'GM 'or 'EA')."
+pharmacy_type_indicator,"Pharmacy Type Indicator",string,default,"The source of pharmacy survey data used to calculate the NADAC. 'C/I' indicates data was collected from surveys of Chain/Independent pharmacies. Other pharmacy type indicators are not used at this time."
+otc,OTC,string,default,"Indicates whether or not the NDC is for an over-the-counter (OTC) product ('Y' or 'N')."
+explanation_code,"Explanation Code",string,default,"Codes that pertain to how the NADAC was calculated; see explanation code descriptions below.
+
+Code 1: The NADAC was calculated using information from the most recently completed pharmacy survey.
+Code 2: The average acquisition cost of the most recent survey was within ± 2%of the current NADAC; therefore, the NADAC was carried forward from the previous file.
+Code 3: The NADAC based on survey data has been adjusted to reflect changes in published pricing, or as a result of an inquiry to the help desk.
+Code 4: The NADAC was carried forward from the previous file.
+Code 5: The NADAC was calculated based on package size.
+Code 6: The CMS Covered Outpatient Drug Product File drug category type of 'S/I/N' (Single Source/Innovator/Non-Innovator) has not been applied. Most 'S/I' drugs with the same strength, dosage form and route of administration were grouped together for the purpose of the NADAC calculation and 'N' drugs were also grouped together. In some cases, however, in calculating a NADAC, the CMS 'S/I/N' designation was not applied when the State Medicaid brand or generic payment practices for these drugs generally differed from the Covered Outpatient Drug Product File designation.
+
+For example, authorized generic drugs are appropriately listed in the CMS covered outpatient drug file as I drugs for the purpose of rebates as they were approved under a New Drug Application (NDA). However, they are grouped as 'N' for the NADAC calculation since they are generally designated as generic by most State Medicaid programs for the purposes of reimbursement. Another example of this occurrence is when proprietary named drugs, approved under an Abbreviated New Drug Application (ANDA) are appropriately in the CMS Covered Outpatient Drug file as 'N' for the purpose of rebates. However, they are grouped as 'S/I' for the NADAC calculation since they are generally reimbursed as brand drugs by State Medicaid programs.
+Codes 7 through 10: Reserved for future use."
+classification_for_rate_setting,"Classification for Rate Setting",string,default,"Indicates whether the NDC was considered brand ('B') or generic ('G') for the NADAC rate calculation process. If the NDC was considered brand ('B') and approved under an Abbreviated New Drug Application (ANDA), the indicator is shown as ('B-ANDA'). NDCs approved as biosimilar products are considered brand ('B') and will be designated as ('B-BIO')."
+corresponding_generic_drug_nadac_per_unit,"Corresponding Generic Drug NADAC Per Unit",string,default,"The NADAC for the corresponding generic drug."
+corresponding_generic_drug_effective_date,"Corresponding Generic Drug Effective Date",date,%m/%d/%Y,"The effective date of when the Corresponding Generic Drug NADAC Per Unit is assigned to a multiple source brand drug NDC. This date may not correspond to the NADAC effective date for the generic drug due to the method by which the corresponding generic drug NADAC effective date is assigned.
+The corresponding generic drug NADAC effective date is the latter of the following dates: a) date of the NADAC reference file upon which the corresponding generic drug NADAC first appears, b) the current corresponding generic drug NADAC effective date plus one day - one day is added to the previous date so that there are no overlapping rate segments, or c) the NADAC Effective Date for the generic drug group. This data assignment process is necessary to eliminate the potential for applying corresponding generic drug NADACs to past claims."
+as_of_date,"As of Date",date,%m/%d/%Y,"As of date."
