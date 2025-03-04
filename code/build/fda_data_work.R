@@ -30,15 +30,19 @@ fda_drug_data <- fda_drug_data %>%
 
 
 #Converts ndc code to match NDC code from NADAC
-convert_ndc <- function(ndc) {
-  # 4-4 Format: XXXX-XXXX → 0XXXX-XXXX
-  if (nchar(ndc) == 8) {
-    return(sub("(\\d{4})(\\d{4})", "0\\1\\2", ndc))
+convert_ndc <- function(PRODUCTNDC) {
+  
+  #Drops hyphen from ndc code
+  PRODUCTNDC <- gsub("-", "", PRODUCTNDC)
+  
+  #Adds a leading 0 to ndc codes in 4-4 format
+  if (grepl("^0", PRODUCTNDC)) {
+    return(paste0("0", PRODUCTNDC))  # Adds another leading zero
   }
   
-  # 5-3 Format: XXXXX-XXX → XXXXX-0XXX
-  if (nchar(ndc) == 8) {
-    return(sub("(\\d{5})(\\d{3})", "\\1\\02\\3", ndc))
+  #If NDC starts 1-9, adds a 0 after the first 5 numbers
+  if (grepl("^[1-9]", PRODUCTNDC)) {
+    return(sub("^(\\d{5})(\\d{3})$", "\\10\\2", PRODUCTNDC))  # Converts XXXXX-XXX → XXXXX-0XXX
   }
 }
 
