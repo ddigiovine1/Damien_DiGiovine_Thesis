@@ -8,6 +8,9 @@ library(dplyr)
 
 #READ IN ALL ACQUISITION PRICE DATA FILES DOWNLOADED LOCALLY
 #2014
+nadac_2013 <- read_csv("data/raw/nadac-national-average-drug-acquisition-cost.a4y5-998d.1fe73992-cbfd-5109-97bc-dee8b33fdcff.csv")
+
+#2014
 nadac_2014 <- read_csv("data/raw/nadac-national-average-drug-acquisition-cost.a4y5-998d.ba0c3734-8012-549a-8f50-2ff389d0e0ef.csv")
 
 #2015
@@ -40,6 +43,9 @@ nadac_2023 <- read_csv("data/raw/nadac-national-average-drug-acquisition-cost-12
 #2024
 nadac_2024 <- read_csv("data/raw/nadac-national-average-drug-acquisition-cost-12-25-2024.csv")
 
+#2025
+nadac_2025 <- read_csv("data/raw/nadac-national-average-drug-acquisition-cost-03-05-2025.csv")
+
 
 
 #Creates a list of all dataset names to assist in merge
@@ -54,7 +60,9 @@ nadac_list <- list(
   nadac_2021,
   nadac_2022,
   nadac_2023,
-  nadac_2024
+  nadac_2024,
+  nadac_2025,
+  nadac_2013
 )
 
 
