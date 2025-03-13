@@ -62,14 +62,13 @@ for (zip_file in zip_files) {
 
 cat("Extraction, renaming, and moving complete.\n")
 
-file.remove("~/Documents/Thesis/data/raw/ASP_Files/Unzipped_Files/ASP_1_-.xls")
-file.remove("~/Documents/Thesis/data/raw/ASP_Files/Unzipped_Files/ASP_Jan06_NOC.xls")
 
 # List files after renaming
 file_dir <- "~/Documents/Thesis/data/raw/ASP_Files/Unzipped_Files"
 files <- list.files(file_dir, pattern = "\\.xls$", ignore.case = TRUE)
-files <- files[!grepl("Crosswalk", files, ignore.case = TRUE)]
+files <- files[!grepl("Crosswalk|NOC", files, ignore.case = TRUE)]
 files
+
 
 
 # Function to detect header row
@@ -112,6 +111,7 @@ extract_date_specific <- function(filename) {
     if (filename == "ASP_Apr05ASPbyHCPCSv8_033106.xls") return(as.Date("2005-04-01"))
     if (filename == "ASP_April_08.xls") return(as.Date("2008-04-01"))
     if (filename == "ASP_April_2009.xls") return(as.Date("2009-04-01"))
+    if (filename == "ASP_Apr_10.xls") return(as.Date("2010-04-01"))
     if (filename == "ASP_April_2011.xls") return(as.Date("2011-04-01"))
     if (filename == "ASP_April_2020.xls") return(as.Date("2020-04-01"))
     if (filename == "ASP_April_2021.xls") return(as.Date("2021-04-01"))
@@ -134,10 +134,10 @@ extract_date_specific <- function(filename) {
     if (filename == "ASP_Jan_2019.xls") return(as.Date("2019-01-01"))
     if (filename == "ASP_Jan_2025.xls") return(as.Date("2025-01-01"))
     if (filename == "ASP_Jan05ASPbyHCPCSv6_033106.xls") return(as.Date("2005-01-01"))
-    if (filename == "ASP_Jan06_NOC.xls") return(as.Date("2006-01-01"))
     if (filename == "ASP_Jan06ASPbyHCPCS_062106.xls") return(as.Date("2006-01-01"))
     if (filename == "ASP_Jan07ASPbyHCPCS_121707.xls") return(as.Date("2007-01-01"))
     if (filename == "ASP_Jan11_ASP.xls") return(as.Date("2011-01-01"))
+    if (filename == "ASP_January_2010.xls") return(as.Date("2010-01-01"))
     if (filename == "ASP_January_2020.xls") return(as.Date("2020-01-01"))
     if (filename == "ASP_January_2021.xls") return(as.Date("2021-01-01"))
     if (filename == "ASP_January_2022.xls") return(as.Date("2022-01-01"))
@@ -147,7 +147,7 @@ extract_date_specific <- function(filename) {
     # July files
     if (filename == "ASP_July_2008.xls") return(as.Date("2008-07-01"))
     if (filename == "ASP_July_2009.xls") return(as.Date("2009-07-01"))
-    if (filename == "ASP_Jul_2010.xls") return(as.Date("2010-07-01"))
+    if (filename == "ASP_July_2010.xls") return(as.Date("2010-07-01"))
     if (filename == "ASP_Jul_2011.xls") return(as.Date("2011-07-01"))
     if (filename == "ASP_Jul_2012.xls") return(as.Date("2012-07-01"))
     if (filename == "ASP_Jul_13.xls") return(as.Date("2013-07-01"))
@@ -168,6 +168,7 @@ extract_date_specific <- function(filename) {
   
     
     # October files
+    if (filename == "ASP_Oct_10.xls") return(as.Date("2010-10-01"))
     if (filename == "ASP_Oct_11.xls") return(as.Date("2011-10-01"))
     if (filename == "ASP_Oct_12.xls") return(as.Date("2012-10-01"))
     if (filename == "ASP_Oct_13.xls") return(as.Date("2013-10-01"))

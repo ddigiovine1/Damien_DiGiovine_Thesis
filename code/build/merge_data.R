@@ -102,4 +102,11 @@ ASP_filtered <- Done_ASP %>%
 ASP_filtered %>% 
   count(`HCPCS Code`) %>%
   print(n = 61)
- 
+
+ASP_filtered <- ASP_filtered %>%
+  select(`HCPCS Code`,
+         `Short Description`,
+         `Payment Limit`,
+         date)
+
+ASP_filtered <- ASP_filtered %>% arrange(`HCPCS Code`, date)
