@@ -29,17 +29,77 @@ for (i in fda_drug_names) {
     filter(grepl(i, `Code Description`, ignore.case = TRUE))
 }
 
-search_results <- search_results[order(sapply(search_results, nrow), decreasing = TRUE)]
+search_results_M <- search_results[order(sapply(search_results, nrow), decreasing = TRUE)]
 
 
-bound_SR <- bind_rows(search_results[names(search_results) != "BAT"])
+bound_SRM <- bind_rows(search_results[names(search_results) != "BAT"])
 
-bound_SR$`Fee Effective Date` <- as.Date(bound_SR$`Fee Effective Date`, origin = "1899-12-30")
+bound_SRM$`Fee Effective Date` <- as.Date(bound_SRM$`Fee Effective Date`, origin = "1899-12-30")
 
 #Replace spaces with underscores in naming for easier analysis
-colnames(bound_SR) <- gsub(" ", "_", colnames(bound_SR))
+colnames(bound_SRM) <- gsub(" ", "_", colnames(bound_SRM))
 
 
 #GO THROUGH AND CHECK FOR NON PLASMA DERIVED DESCRIPTIONS
 write_csv(search_results[["HUMAN"]], "data/work/humansearchresults.csv")
 
+
+
+MC_drug_list <- bound_SRM %>%
+  count(Code_Description) 
+
+print(MC_drug_list, n = 60)
+
+
+
+
+search_results <- list()
+
+#Searches for each keyword in the maine_care database and returns array of tables with keyword mathches
+for (i in fda_drug_names) {
+  search_results[[i]] <- NC_data %>%
+    filter(grepl(i, `Procedure Code Description`, ignore.case = TRUE),
+           !grepl("Recombinant(?!.*non-recombinant)", `Procedure Code Description`, ignore.case = TRUE, perl = TRUE))
+}
+
+search_results <- search_results[order(sapply(search_results, nrow), decreasing = TRUE)]
+
+bound_SR <- bind_rows(search_results)
+
+NC_clean <- NC_data %>%
+  filter(!grepl("Recombinant(?!.*non-recombinant)", `Procedure Code Description`, ignore.case = TRUE, perl = TRUE),
+         `Notes 1` == "IMMUNE GLOBULINS" | `Notes 1` == "CLOTTING FACTOR")
+
+NC_cleaner <- bind_rows(bound_SR, NC_clean) %>%
+  distinct()
+
+
+NC_drug_list <- NC_cleaner %>%
+  count(`Procedure Code Description`) %>%
+  pull(`Procedure Code Description`)
+
+print(NC_drug_list)
+
+
+
+NC_drug_list_codes <- NC_cleaner %>%
+  count(`Procedure Code`) %>%
+  pull(`Procedure Code`)
+
+MC_drug_list_codes <- bound_SRM %>%
+  count(`Service_Code`) %>%
+  pull(`Service_Code`)
+
+combined_drug_codes <- c(MC_drug_list_codes, NC_drug_list_codes) %>%
+  unique()
+
+
+
+ASP_filtered <- Done_ASP %>%
+  filter(`HCPCS Code` %in% combined_drug_codes)
+
+
+ASP_filtered %>% 
+  count(`HCPCS Code`) %>%
+  print(n = 61)
+ 
