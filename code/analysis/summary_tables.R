@@ -45,3 +45,32 @@ writeLines(as.character(html_table), "ASP_Summary_Table.html")
 
 # Step 2: Use webshot to convert the HTML file to a PNG image
 webshot::webshot("ASP_Summary_Table.html", file = "ASP_Summary_Table.png")
+
+
+
+
+#Creating variable description table
+#install.packages("arsenal")
+#install.packages("officer")
+library(arsenal)
+library(officer)
+
+# Create a data frame for the variable descriptions
+variable_table <- data.frame(
+  Variable = c("HCPCS", "Short Description", "Payment Limit"),
+  Description = c("Healthcare Common Procedure Coding System is a code that uniquely identifies a procedure or drug", "Description of the type of drug or treatment being provided", "Medicare payment limit associated with drug - calculated as the average sale price + 6%")
+)
+
+# Create a Word document
+doc <- read_docx()
+
+# Add the title for the table
+doc <- doc %>%
+  body_add_par("Figure 2: Variable Descriptions", style = "caption") # "caption" style for titles
+
+# Add the table below the title
+doc <- doc %>%
+  body_add_table(value = variable_table, style = "table_template")
+
+# Save the document
+print(doc, target = "variable_descriptions.docx")
